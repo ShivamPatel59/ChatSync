@@ -1,18 +1,28 @@
-import { Box, Tooltip,Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider,Input,useToast,Spinner
- } from '@chakra-ui/react'
-import { Text } from '@chakra-ui/layout'
-import { Avatar }
- from "@chakra-ui/react";
-import axios from 'axios';
-import UserListItem from "../UserAvatar/UserListItem"
-import { useDisclosure } from '@chakra-ui/hooks';
-import React from 'react'
-import { useState } from 'react'
-import { BellIcon,ChevronDownIcon } from '@chakra-ui/icons'
-import ProfileModal from './ProfileModal'
+import {
+  Box,
+  Tooltip,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Input,
+  useToast,
+} from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/spinner";
+import { Text } from "@chakra-ui/layout";
+import { Avatar } from "@chakra-ui/react";
+import axios from "axios";
+import UserListItem from "../UserAvatar/UserListItem";
+import { useDisclosure } from "@chakra-ui/hooks";
+import React from "react";
+import { useState } from "react";
+import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import ProfileModal from "./ProfileModal";
 import { ChatState } from "../../Context/ChatProvider";
-import { useHistory } from 'react-router-dom'
-import ChatLoading from '../ChatLoading'
+import { useHistory } from "react-router-dom";
+import ChatLoading from "../ChatLoading";
 import {
   Drawer,
   DrawerBody,
@@ -20,91 +30,95 @@ import {
   DrawerOverlay,
   DrawerContent,
 } from "@chakra-ui/react";
+
 const SideDrawer = () => {
-    const[search, setSearch] = useState('')
-    const {user}=ChatState();
-    const {setSelectedChat} = ChatState();
-    const [chats, setChats] = useState([]);
-    const[searchResult, setSearchResult] = useState([])
-    const [loading , setLoading] = useState(false)
-    const [loadingChat , setLoadingChat] = useState(false)
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const toast=useToast();
-    // const [placement, setPlacement] = useState("left");
-    const history = useHistory();
-    const logoutHandler = () => {
-        localStorage.removeItem("userInfo");
-        history.push("/");
-        // window.location.reload();
-      };
-      const handleSearch = async () => {
-          if(!search){
-              toast({
-                  title:"Please Something to Search",
-                  status:"error",
-                  duration:3000,
-                  isClosable:true,
-                  position:"bottom-left"
-              })
-              return;
-          }
-          try {
-              setLoading(true)
-              const config = {
-                  headers: {
-                      "Content-Type": "application/json",
-                      Authorization: `Bearer ${user.token}`,
-                  },
-              };
-              const { data } = await axios.get(
-                `http://localhost:5000/api/user?search&name=${search}`,
-                config
-              );
-              console.log(data)
-              setSearchResult(data);
-              setLoading(false) 
-
-          } catch (error) {
-              toast({
-                  title:"Something went wrong",
-                  status:"error",
-                  duration:3000,
-                  isClosable:true,
-                  position:"bottom-left"
-              })
-              setLoading(false)
-          }
-
-      };
-
-    const accessChat = async (userId) => {
-        setLoadingChat(true)
-        onClose()
-        try {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.token}`,
-                },
-            };
-            const { data } = await axios.post(
-              'http://localhost:5000/api/chat',{userId},config);
-
-            if(!chats.find((c)=> c._id=== data._id))setChats([data, ...chats]);
-            setSelectedChat(data)
-            setLoadingChat(false)
-            onClose();
-        } catch (error) {
-            setLoadingChat(false)
-            toast({
-                title:"Unable to open Chat",
-                status:"error",
-                duration:3000,
-                isClosable:true,
-                position:"bottom-left"
-            })
-        }
+  const [search, setSearch] = useState("");
+  const { user } = ChatState();
+  const { setSelectedChat, chats, setChats } = ChatState();
+  const [searchResult, setSearchResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingChat, setLoadingChat] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  // const [placement, setPlacement] = useState("left");
+  const history = useHistory();
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    history.push("/");
+    // window.location.reload();
+  };
+  const handleSearch = async () => {
+    if (!search) {
+      toast({
+        title: "Please Something to Search",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+      return;
     }
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `http://localhost:5000/api/user?search=${search}`,
+        config
+      );
+      // console.log(data)
+      setSearchResult(data);
+      setLoading(false);
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+      setLoading(false);
+    }
+  };
+
+  
+  const accessChat = async (userId) => {
+    setLoadingChat(true);
+    // onClose();
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:5000/api/chat",
+        { userId },
+        config
+      );
+
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      setSelectedChat(data);
+      setLoadingChat(false);
+      // console.log(data)
+      onClose();
+    } catch (error) {
+      setLoadingChat(false);
+      toast({
+        title: "Unable to open Chat",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+    setLoadingChat(false);
+  };
   return (
     <>
       <Box
@@ -126,9 +140,7 @@ const SideDrawer = () => {
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="fantasy">
-          Chat App
-        </Text>
+        <Text fontSize="2xl">ChatSync</Text>
         <div>
           <Menu>
             <MenuButton p={1}>
@@ -159,7 +171,7 @@ const SideDrawer = () => {
         </div>
       </Box>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
+        {/* <DrawerOverlay /> */}
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
           <DrawerBody>
@@ -170,7 +182,14 @@ const SideDrawer = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <Button onClick={handleSearch}>Go</Button>
+              <Button
+                onClick={handleSearch}
+                size="sm"
+                margin="5px"
+                width="100%"
+              >
+                Go
+              </Button>
             </Box>
             {loading ? (
               <ChatLoading />
@@ -182,13 +201,14 @@ const SideDrawer = () => {
                   handleFunction={() => accessChat(user._id)}
                 />
               ))
-            )}
-            {loadingChat && <Spinner ml="auto" d="flex" />}
+              )
+            }
+              {loadingChat && <Spinner ml="auto" d="flex" />}
           </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
   );
-}
+};
 
-export default SideDrawer
+export default SideDrawer;
