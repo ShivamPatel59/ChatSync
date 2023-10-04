@@ -5,10 +5,10 @@ import { ChatState } from "../Context/ChatProvider";
 
 const Chatbox = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat } = ChatState();
-
+  console.log(selectedChat);
   return (
     <Box
-      display={{ base: selectedChat ? "flex" : "none", md: "flex" }}
+      display={{ base: selectedChat ? "flex" : "none", md:"flex"  }}
       alignItems="center"
       flexDir="column"
       p={3}
@@ -18,8 +18,8 @@ const Chatbox = ({ fetchAgain, setFetchAgain }) => {
       borderwidth="1px"
       textColor="black"
     >
-      Chat Box
-      {/* <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} /> */}
+      {/* Chat Box */}
+      <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
     </Box>
   );
 };

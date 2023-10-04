@@ -1,35 +1,34 @@
-import React, { useEffect } from 'react'
-import {ChatState} from '../Context/ChatProvider'
-import { Box, Button, Grid, Stack, useToast } from '@chakra-ui/react';
-import axios from 'axios';
-import { useState,useE } from 'react';
-import { AddIcon } from '@chakra-ui/icons';
-import getSender from '../config/ChatLogic';
-import ChatLoading from './ChatLoading';
-import { Text } from '@chakra-ui/layout';
-import GroupChatModal from './miscellaneous/GroupChatModal';
+import { AddIcon } from "@chakra-ui/icons";
+import { Text } from "@chakra-ui/layout";
+import { Box, Button, Grid, Stack, useToast } from "@chakra-ui/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { ChatState } from "../Context/ChatProvider";
+import { getSender } from "../config/ChatLogic";
+import ChatLoading from "./ChatLoading";
+import GroupChatModal from "./miscellaneous/GroupChatModal";
 
-
-const MyChats = ({fetchAgain}) => {
-  const [ loggedUser, setLoggedUser ] = useState();
-  const { selectedChat, setSelectedChat, user,chats,setChats } = ChatState();
+const MyChats = ({ fetchAgain }) => {
+  const [loggedUser, setLoggedUser] = useState();
+  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   const toast = useToast();
 
-  const fetchChats = async()=>{
-
-    try{
+  const fetchChats = async () => {
+    try {
       const config = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const {data} = await axios.get('http://localhost:5000/api/chat',config);
+      const { data } = await axios.get(
+        "http://localhost:5000/api/chat",
+        config
+      );
       setChats(data);
       // console.log(data);
-    }
-    catch(error){
+    } catch (error) {
       toast({
         title: "Something went wrong",
         status: "error",
@@ -38,7 +37,7 @@ const MyChats = ({fetchAgain}) => {
         position: "bottom-left",
       });
     }
-  }
+  };
 
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
@@ -68,10 +67,10 @@ const MyChats = ({fetchAgain}) => {
         alignItems={"center"}
         w={"100%"}
       >
-        <Box>Chats</Box>
+        <Box>My Chats</Box>
         <GroupChatModal>
           <Button
-            d="flex"
+            display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
             colorScheme="purple"
@@ -82,7 +81,7 @@ const MyChats = ({fetchAgain}) => {
       </Grid>
 
       <Box
-        d="flex"
+        display="flex"
         flexDirection={"column"}
         w={"100%"}
         h={"100%"}
@@ -121,6 +120,6 @@ const MyChats = ({fetchAgain}) => {
       </Box>
     </Box>
   );
-}
+};
 
-export default MyChats
+export default MyChats;

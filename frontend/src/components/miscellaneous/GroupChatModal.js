@@ -100,7 +100,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.post(
-        `/api/chat/group`,
+        `http://localhost:5000/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),
@@ -135,15 +135,11 @@ const GroupChatModal = ({ children }) => {
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader
-            fontSize="35px"
-            d="flex"
-            justifyContent="center"
-          >
+          <ModalHeader fontSize="35px" display="flex" justifyContent="center">
             Create Group Chat
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody d="flex" flexDir="column" alignItems="center">
+          <ModalBody display="flex" flexDir="column" alignItems="center">
             <FormControl>
               <Input
                 placeholder="Chat Name"
@@ -159,12 +155,12 @@ const GroupChatModal = ({ children }) => {
               />
             </FormControl>
             <Box
-                w="100%" 
-                display="flex" 
-                flexWrap="wrap"
-                justifyContent="center"
-                alignItems="center"
-                mb={3}
+              w="100%"
+              display="flex"
+              flexWrap="wrap"
+              justifyContent="center"
+              alignItems="center"
+              mb={3}
             >
               {selectedUsers.map((u) => (
                 <UserBadgeItem

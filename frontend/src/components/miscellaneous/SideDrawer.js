@@ -1,35 +1,31 @@
+import { useDisclosure } from "@chakra-ui/hooks";
+import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { Text } from "@chakra-ui/layout";
 import {
+  Avatar,
   Box,
-  Tooltip,
   Button,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  Input,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
   MenuDivider,
-  Input,
+  MenuItem,
+  MenuList,
+  Tooltip,
   useToast,
 } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/spinner";
-import { Text } from "@chakra-ui/layout";
-import { Avatar } from "@chakra-ui/react";
 import axios from "axios";
-import UserListItem from "../UserAvatar/UserListItem";
-import { useDisclosure } from "@chakra-ui/hooks";
-import React from "react";
-import { useState } from "react";
-import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import ProfileModal from "./ProfileModal";
-import { ChatState } from "../../Context/ChatProvider";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { ChatState } from "../../Context/ChatProvider";
 import ChatLoading from "../ChatLoading";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-} from "@chakra-ui/react";
+import UserListItem from "../UserAvatar/UserListItem";
+import ProfileModal from "./ProfileModal";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -85,7 +81,6 @@ const SideDrawer = () => {
     }
   };
 
-  
   const accessChat = async (userId) => {
     setLoadingChat(true);
     // onClose();
@@ -175,7 +170,7 @@ const SideDrawer = () => {
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
           <DrawerBody>
-            <Box d="flex" pb={2}>
+            <Box display="flex" pb={2}>
               <Input
                 placeholder="Search by name or email"
                 mr={2}
@@ -201,9 +196,8 @@ const SideDrawer = () => {
                   handleFunction={() => accessChat(user._id)}
                 />
               ))
-              )
-            }
-              {loadingChat && <Spinner ml="auto" d="flex" />}
+            )}
+            {loadingChat && <Spinner ml="auto" display="flex" />}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

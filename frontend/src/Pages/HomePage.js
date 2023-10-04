@@ -1,6 +1,6 @@
-import React from 'react'
-import Login from '../components/Authentication/Login';
-import Signup from '../components/Authentication/Signup';
+import React from "react";
+import Login from "../components/Authentication/Login";
+import Signup from "../components/Authentication/Signup";
 import {
   Container,
   Box,
@@ -15,7 +15,7 @@ const HomePage = () => {
   return (
     <Container maxW="xl" centerContent>
       <Box
-        d="flex"
+        display="flex"
         padding="4"
         justifyContent={{ base: "center", md: "center" }}
         textAlign={{ base: "center", md: "center" }}
@@ -28,24 +28,35 @@ const HomePage = () => {
       >
         <Text fontSize="4xl">Welcome to the Chat App</Text>
       </Box>
-      <Box bg ="whiteAlpha.200" w="100%" p={4} borderRadius="lg" borderWidth="1px">
+      <Box
+        bg="whiteAlpha.200"
+        w="100%"
+        p={4}
+        borderRadius="lg"
+        borderWidth="1px"
+      >
         <Tabs variant="soft-rounded">
           <TabList mb="1em">
-            <Tab width="50%" color={'white'} >Login</Tab>
-            <Tab width="50%" color={'white'}> Sign Up</Tab>
+            <Tab width="50%" color={"white"}>
+              Login
+            </Tab>
+            <Tab width="50%" color={"white"}>
+              {" "}
+              Sign Up
+            </Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
               <Login />
             </TabPanel>
             <TabPanel>
-                <Signup />
+              <Signup />
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
     </Container>
   );
-}
+};
 
-export default HomePage
+export default HomePage;

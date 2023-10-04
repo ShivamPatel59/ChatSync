@@ -1,8 +1,11 @@
 // Objective: get the sender name of the message
-const getSender = (loggedUser, users) => {
-    // console.log("loggedUser: ", loggedUser);
-//   console.log(loggedUser);
+export const getSender = (loggedUser, users) => {
   return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
 };
 
-export default getSender;
+//Objective: get the sender name of the message
+export const getSenderFull = (loggedUser, users) => {
+  return users[0]._id === loggedUser._id ? users[1] : users[0];
+};
+
+
