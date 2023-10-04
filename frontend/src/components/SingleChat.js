@@ -10,9 +10,17 @@ import axios from 'axios';
 import "./styles.css";
 import ScrollableChat from './ScrollableChat';
 
+import io from "socket.io-client";
+
+const ENDPOINT="http://localhost:5000";
+
+var socket,selectedChatCompare;
+
+
 const SingleChat = ({
     fetchAgain, setFetchAgain
 }) => {
+    const [socketConnected, setSocketConnected] = useState(false);
     const [messages, setMessages] = React.useState([]); 
     const [loading, setLoading] = React.useState(false);
     const [newMessage, setNewMessage] = React.useState("");
@@ -35,6 +43,7 @@ const SingleChat = ({
           // console.log("data", data)
           setMessages(data);
           setLoading(false);
+          socket.emit("join chat", selectedChat._id);
       }
       catch(error){
         toast({
@@ -48,9 +57,30 @@ const SingleChat = ({
       }
     }
 
+     useEffect(() => {
+       socket = io(ENDPOINT);
+       socket.emit("setup", user);
+       socket.on("connection", () => {
+         setSocketConnected(true);
+       });
+     }, []);
+
     useEffect(()=>{
       fetchMessages();
+      selectedChatCompare=selectedChat;
     },[selectedChat])
+
+    useEffect(()=>{
+      socket.on("message received", (newMessageRecieved) => {
+        if(!selectedChatCompare || selectedChatCompare._id!== newMessageRecieved.chat._id){
+          //give notification
+        }
+        else{
+          setMessages([...messages,newMessageRecieved]);
+        }
+      }
+    )
+  });
 
     const sendMessage = async  (event) => {
         if(event.key === "Enter"){
@@ -69,8 +99,9 @@ const SingleChat = ({
                 },
                 config
                 );
-                console.log("data: ",data);
+                // console.log("data: ",data);
               setNewMessage("");
+                socket.emit("new message", data);
               setMessages([...messages,data]);
             }catch(error){
                 toast({
@@ -83,6 +114,7 @@ const SingleChat = ({
             }
         }
     }
+
 
     const typingHandler = (e) => {
         setNewMessage(e.target.value);
