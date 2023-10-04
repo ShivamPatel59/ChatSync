@@ -32,6 +32,7 @@ const SingleChat = ({
             `http://localhost:5000/api/message/${selectedChat._id}`,config
           );
           // console.log(data);
+          // console.log("data", data)
           setMessages(data);
           setLoading(false);
       }
@@ -148,7 +149,7 @@ const SingleChat = ({
               />
             ) :(
               <div className='messages'>
-                  <ScrollableChat message={messages} />
+                  <ScrollableChat messages={messages} />
               </div>
             )}
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>

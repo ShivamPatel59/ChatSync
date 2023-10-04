@@ -11,11 +11,15 @@ import { ChatState } from "../Context/ChatProvider";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
+  console.log("messages", messages);
 
   return (
     <ScrollableFeed>
       {messages &&
-        messages.map((m, i) => (
+        messages.map((m, i) => {
+          // console.log(m)
+          return (
+
           <div style={{ display: "flex" }} key={m._id}>
             {(isSameSender(messages, m, i, user._id) ||
               isLastMessage(messages, i, user._id)) && (
@@ -42,11 +46,10 @@ const ScrollableChat = ({ messages }) => {
                 maxWidth: "75%",
               }}
             >
-                <>Content</>
               {m.content}
             </span>
           </div>
-        ))}
+        )})}
     </ScrollableFeed>
   );
 };
