@@ -9,6 +9,7 @@ const ChatProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState();
+  const [notification, setNotification] = useState([]);
 
   // when we created login and signu up we stored user info in local storage
 
@@ -32,7 +33,16 @@ const ChatProvider = ({ children }) => {
 
   return (
     <ChatContext.Provider
-      value={{ user, setUser, chats, selectedChat, setSelectedChat, setChats }}
+      value={{
+        user,
+        setUser,
+        chats,
+        selectedChat,
+        setSelectedChat,
+        setChats,
+        notification,
+        setNotification,
+      }}
     >
       {children}
     </ChatContext.Provider>

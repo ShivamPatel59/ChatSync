@@ -128,7 +128,7 @@ const SideDrawer = () => {
         // borderWidth="5px"
       >
         <Tooltip label="Search Users to Chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen}>
+          <Button variant="ghost" onClick={onOpen} textColor={"white"}>
             <i class="fa-solid fa-magnifying-glass"></i>
             <Text display={{ base: "none", md: "flex" }} px="4">
               Search Users
@@ -140,9 +140,8 @@ const SideDrawer = () => {
           <Menu>
             <MenuButton p={1}>
               <BellIcon fontSize="2xl" m={1}></BellIcon>
-              {/* <ChevronDownIcon fontSize="xl" m={1}></ChevronDownIcon> */}
-              {/* <MenuList></MenuList> */}
             </MenuButton>
+              
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
@@ -170,7 +169,8 @@ const SideDrawer = () => {
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
           <DrawerBody>
-            <Box display="flex" pb={2}>
+            <Box  pb={2} 
+              flexDir={{ base: "column", md: "col" }}>
               <Input
                 placeholder="Search by name or email"
                 mr={2}

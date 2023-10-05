@@ -25,7 +25,9 @@ const SingleChat = ({
     const [loading, setLoading] = React.useState(false);
     const [newMessage, setNewMessage] = React.useState("");
     const toast = useToast();
-    const {user, selectedChat,setSelectedChat} = ChatState();
+    const {user, selectedChat,setSelectedChat,notification,setNotification} = ChatState();
+    const [Typing, setTyping] = useState(false);
+    const [IsTyping,setIsTyping]=useState(false); 
 
     const fetchMessages= async() =>{
       if(!selectedChat)return;
@@ -60,11 +62,15 @@ const SingleChat = ({
      useEffect(() => {
        socket = io(ENDPOINT);
        socket.emit("setup", user);
-       socket.on("connection", () => {
+       socket.on("connected", () => {
          setSocketConnected(true);
        });
-     }, []);
 
+        socket.on("typing",()=>setIsTyping(true));
+
+        socket.on("stop typing",()=>setIsTyping(false));
+
+     }, []);
     useEffect(()=>{
       fetchMessages();
       selectedChatCompare=selectedChat;
@@ -74,6 +80,10 @@ const SingleChat = ({
       socket.on("message received", (newMessageRecieved) => {
         if(!selectedChatCompare || selectedChatCompare._id!== newMessageRecieved.chat._id){
           //give notification
+          if(!notification.includes(newMessageRecieved.chat._id)){
+            setNotification([newMessageRecieved,...notification]);
+            setFetchAgain(!fetchAgain);
+          }
         }
         else{
           setMessages([...messages,newMessageRecieved]);
@@ -83,7 +93,8 @@ const SingleChat = ({
   });
 
     const sendMessage = async  (event) => {
-        if(event.key === "Enter"){
+        if(event.key === "Enter" && newMessage){
+          socket.emit("stop typing", selectedChat._id);
             try{
               const config = {
                 headers: {
@@ -118,7 +129,22 @@ const SingleChat = ({
 
     const typingHandler = (e) => {
         setNewMessage(e.target.value);
-    }
+
+        if(!socketConnected)return;
+
+        if(!Typing){
+          setTyping(true);
+          socket.emit("typing", selectedChat._id);
+        }
+
+        clearTimeout(Typing);
+        const timeout=setTimeout(()=>{
+          setTyping(false);
+          socket.emit("stop typing", selectedChat._id);
+        },3000);
+        setTyping(timeout);
+
+    } 
 
   return (
     <>
@@ -185,8 +211,10 @@ const SingleChat = ({
               </div>
             )}
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+              <Text display={IsTyping?"flex":"none"} fontSize="sm" color="gray.500" pb={1} textAlign="center">
+                {getSender(user, selectedChat.users)} is typing...
+              </Text>
               <Input 
-                
                 _hover={{ bg: "gray.400" }}
                 variant="filled"
                 bg="gray.400"
