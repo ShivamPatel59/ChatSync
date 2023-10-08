@@ -61,6 +61,7 @@ const Login = () => {
       });
       setLoading(false);
       history.push("/chats");
+      window.location.reload();
     } catch (error) {
       toast({
         title: "Invalid Credentials",

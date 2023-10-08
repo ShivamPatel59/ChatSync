@@ -27,7 +27,7 @@ const HomePage = () => {
         // bw: 2px
       >
         <Text fontSize="4xl" textColor={"white"}>
-          Welcome to the{" "}
+          Welcome to {" "}
           <Text
             bgGradient="linear(to-l, blue.100, cyan.500)"
             bgClip="text"

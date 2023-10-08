@@ -11,7 +11,7 @@ import GroupChatModal from "./miscellaneous/GroupChatModal";
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-
+  console.log(!selectedChat)
   const toast = useToast();
 
   const fetchChats = async () => {
@@ -45,7 +45,7 @@ const MyChats = ({ fetchAgain }) => {
 
   return (
     <Box
-      display={{ base: selectedChat === null ? "none" : "flex", md: "flex" }}
+      display={{base: selectedChat ? "none" : "flex", lg:"flex"}}
       flexDirection={"column"}
       alignItems={"center"}
       w={{ base: "100%", md: "31%" }}
@@ -76,7 +76,7 @@ const MyChats = ({ fetchAgain }) => {
             _hover={
               //zoom effect\
               {
-                transform: "scale(1.1)",
+                transform: "scale(1.02)",
                 transition: "transform .2s",
               }
             }

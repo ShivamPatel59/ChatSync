@@ -42,7 +42,6 @@ const SideDrawer = () => {
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     history.push("/");
-    // window.location.reload();
   };
   const handleSearch = async () => {
     if (!search) {
@@ -152,12 +151,6 @@ const SideDrawer = () => {
           bgClip="text"
           fontSize="4xl"
           // fontWeight="extrabold"
-          _hover={{
-            //Zoom transition
-            transform: "scale(1.3)",
-            transition: "transform .5s",  
-            
-          }}
         >
           ChatSync
         </Text>
@@ -170,7 +163,7 @@ const SideDrawer = () => {
           <Menu>
             <MenuButton
               as={Button}
-              bgColor={"black"}
+              bgColor={"blackAlpha.100"}
               rightIcon={<ChevronDownIcon color={"white"} />}
             >
               <Avatar
