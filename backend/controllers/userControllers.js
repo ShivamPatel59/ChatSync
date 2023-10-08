@@ -8,7 +8,7 @@ const generateToken = require("../config/generateToken");
 //@route           GET /api/user?search=
 //@access          Public
 const allUsers = asyncHandler(async (req, res) => {
-  console.log(req.query.search);
+  // console.log(req.query.search);
   const keyword = req.query.search
     ? {
         name: {
