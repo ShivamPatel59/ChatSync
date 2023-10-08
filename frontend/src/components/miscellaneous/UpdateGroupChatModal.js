@@ -246,7 +246,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
               />
               <Button
                 variant="solid"
-                colorScheme="teal"
+                colorScheme="purple"
                 ml={1}
                 isLoading={renameloading}
                 onClick={handleRename}

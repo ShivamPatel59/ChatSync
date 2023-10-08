@@ -25,7 +25,7 @@ const SingleChat = ({
     const [loading, setLoading] = React.useState(false);
     const [newMessage, setNewMessage] = React.useState("");
     const toast = useToast();
-    const {user, selectedChat,setSelectedChat,notification,setNotification} = ChatState();
+    const {user, selectedChat,setSelectedChat,notification,setNotification,chats,setChats} = ChatState();
     const [Typing, setTyping] = useState(false);
     const [IsTyping,setIsTyping]=useState(false); 
 
@@ -114,6 +114,18 @@ const SingleChat = ({
               setNewMessage("");
                 socket.emit("new message", data);
               setMessages([...messages,data]);
+              //Update chats
+              // const newChats = [...chats];
+              // const chatIndex = newChats.findIndex((c) => c._id === selectedChat._id);
+              // newChats[chatIndex].latestMessage = data;
+              // setChats(newChats);
+
+              // Latest Message update
+              const newChats = [...chats];
+              const chatIndex = newChats.findIndex((c) => c._id === selectedChat._id);
+              newChats[chatIndex].latestMessage = data;
+              setChats(newChats);
+              
             }catch(error){
                 toast({
                     title: "Fail to send Message.",
@@ -160,8 +172,9 @@ const SingleChat = ({
             flexDir={"row"}
           >
             <IconButton
+              
               display={{ base: "flex", md: "none" }}
-              icon={<ArrowBackIcon />}
+              icon={<ArrowBackIcon color={"black"}/>}
               onClick={() => {
                 setSelectedChat("");
               }}
@@ -172,8 +185,8 @@ const SingleChat = ({
                 <ProfileModal  user={getSenderFull(user, selectedChat.users)} />
                 </>
             ) : (
-              <Box textColor="gray.700">
-                {selectedChat.chatName.toUpperCase()}
+              <Box textColor="gray.700" display="flex">
+                {selectedChat.chatName}
                 <UpdateGroupChatModal          
                      fetchAgain={fetchAgain}
                      setFetchAgain={setFetchAgain}
@@ -215,10 +228,9 @@ const SingleChat = ({
                 {getSender(user, selectedChat.users)} is typing...
               </Text>
               <Input 
-                _hover={{ bg: "gray.400" }}
                 variant="filled"
-                bg="gray.400"
-                border={10}
+                bg="white"
+                borderColor={"blue.500"}
                 placeholder="Type a message"
                 placeholderTextColor="black"
                 onChange={typingHandler}
@@ -238,7 +250,7 @@ const SingleChat = ({
           fontWeight="bold"
           color="gray.500"
         >
-          <Text fontSize="3xl" color="gray.500" pb={3} textAlign="center">
+          <Text fontSize="3xl" color="gray.500" pb={3} textAlign="center" >
             Click on a chat to start messaging ^_^
           </Text>
         </Box>

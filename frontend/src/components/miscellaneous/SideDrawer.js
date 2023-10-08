@@ -9,6 +9,7 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerHeader,
+  DrawerOverlay,
   Input,
   Menu,
   MenuButton,
@@ -98,9 +99,9 @@ const SideDrawer = () => {
       );
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+
       setSelectedChat(data);
       setLoadingChat(false);
-      // console.log(data)
       onClose();
     } catch (error) {
       setLoadingChat(false);
@@ -128,23 +129,46 @@ const SideDrawer = () => {
         // borderWidth="5px"
       >
         <Tooltip label="Search Users to Chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen} textColor={"white"}>
+          <Button
+            variant="ghost"
+            onClick={onOpen}
+            textColor={"white"}
+            _hover={{
+              background: "blackAlpha.500",
+            }}
+          >
             <i class="fa-solid fa-magnifying-glass"></i>
             <Text display={{ base: "none", md: "flex" }} px="4">
               Search Users
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl">ChatSync</Text>
+        <Text
+          bgGradient="linear(to-l, pink, yellow.200)"
+          bgClip="text"
+          fontSize="4xl"
+          // fontWeight="extrabold"
+          _hover={{
+            //Zoom transition
+            transform: "scale(1.1)",
+            transition: "transform .2s",  
+            
+          }}
+        >
+          ChatSync
+        </Text>
         <div>
           <Menu>
             <MenuButton p={1}>
-              <BellIcon fontSize="2xl" m={1}></BellIcon>
+              <BellIcon fontSize="2xl" m={1} color={"white"}></BellIcon>
             </MenuButton>
-              
           </Menu>
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <MenuButton
+              as={Button}
+              bgColor={"black"}
+              rightIcon={<ChevronDownIcon color={"white"} />}
+            >
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -152,7 +176,7 @@ const SideDrawer = () => {
                 // name="User"
               />
             </MenuButton>
-            <MenuList background="black">
+            <MenuList background="black" textColor={"white"}>
               <ProfileModal user={user}>
                 <MenuItem background="black">My Profile</MenuItem>
               </ProfileModal>
@@ -164,13 +188,17 @@ const SideDrawer = () => {
           </Menu>
         </div>
       </Box>
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-        {/* <DrawerOverlay /> */}
+      <Drawer
+        placement="left"
+        onClose={onClose}
+        isOpen={isOpen}
+        bgColor="white"
+      >
+        <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
           <DrawerBody>
-            <Box  pb={2} 
-              flexDir={{ base: "column", md: "col" }}>
+            <Box pb={2} flexDir={{ base: "column", md: "col" }}>
               <Input
                 placeholder="Search by name or email"
                 mr={2}

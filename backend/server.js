@@ -56,7 +56,7 @@ app.use(errorHandler);
 
         socket.on('join chat', (room) =>{
             socket.join(room);
-            console.log("Joined Room : ",room);
+            // console.log("Joined Room : ",room);
         });
 
         socket.on('typing', (room) =>{
