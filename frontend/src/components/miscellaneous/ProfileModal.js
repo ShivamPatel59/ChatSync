@@ -29,7 +29,7 @@ const ProfileModal = ({ user, children }) => {
           onClick={onOpen}
         />
       )}
-      <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered >
+      <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent h="410px">
           <ModalHeader fontSize="40px" display="flex" justifyContent="center">
@@ -45,9 +45,10 @@ const ProfileModal = ({ user, children }) => {
             <Image
               borderRadius="full"
               boxSize="150px"
-              src={user.pic}
-              alt={user.name}
+              
+              src= {(user.pic) ? user.pic : "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"}
             />
+            {/* {console.log("img",user.pic)} */}
             <Text
               fontSize={{ base: "28px", md: "30px" }}
               // fontFamily="Work sans"

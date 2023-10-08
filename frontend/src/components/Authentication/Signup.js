@@ -58,6 +58,9 @@ const Signup = () => {
               "Content-Type":"application/json"
             }
           };
+          if(pic===""){
+            setPic("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
+          }
           const { data } = await axios.post(
             "http://localhost:5000/api/user",
             { name, email, password, pic },
@@ -96,18 +99,8 @@ const Signup = () => {
 
     // postDetails function using fetch api 
     const postDetails = (pics) => {
+
         setLoading(true);
-        if(pics===undefined){
-            toast({
-                title: "No Profile Picture Selected",
-                description: "Please Select a Profile Picture",
-                status: "error",
-                duration: 9000,
-                isClosable: true,
-                position: "bottom"
-              });
-              return;
-        }
 
         if(pics.type==="image/jpeg" || pics.type==="image/png"){
           // Upload to Cloudinary
@@ -131,16 +124,12 @@ const Signup = () => {
             });
         }
         else{
-          toast({
-            title: "Invalid File Type",
-            description: "Please Select a Profile Picture of type jpeg or png",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-            position: "bottom"
-          });
+          //Upload default
+          setPic("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
           setLoading(false);
+          
         }
+        
     };
     
 
