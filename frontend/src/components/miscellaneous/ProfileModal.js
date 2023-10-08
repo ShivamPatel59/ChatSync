@@ -1,5 +1,6 @@
 import { ViewIcon } from "@chakra-ui/icons";
 import {
+  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -18,17 +19,17 @@ const ProfileModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <>
+    <Box>
       {children ? (
         <span onClick={onOpen}>{children}</span>
       ) : (
         <IconButton
-          display={{ base: "flex" }}
+          display="flex"
           icon={<ViewIcon color={"black"} />}
           onClick={onOpen}
         />
       )}
-      <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered >
         <ModalOverlay />
         <ModalContent h="410px">
           <ModalHeader fontSize="40px" display="flex" justifyContent="center">
@@ -59,7 +60,7 @@ const ProfileModal = ({ user, children }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 

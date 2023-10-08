@@ -73,6 +73,13 @@ const MyChats = ({ fetchAgain }) => {
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
             colorScheme="purple"
+            _hover={
+              //zoom effect\
+              {
+                transform: "scale(1.1)",
+                transition: "transform .2s",
+              }
+            }
           >
             New Group Chat
           </Button>

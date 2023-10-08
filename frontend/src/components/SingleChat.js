@@ -173,7 +173,7 @@ const SingleChat = ({
           >
             <IconButton
               
-              display={{ base: "flex", md: "none" }}
+              display="flex"
               icon={<ArrowBackIcon color={"black"}/>}
               onClick={() => {
                 setSelectedChat("");
@@ -196,7 +196,7 @@ const SingleChat = ({
             )}
           </Text>
           <Box  
-            display={{ base: "flex", md: "flex" }}
+            display="flex"
             flexDirection="column"
             justifyContent="flex-end"
             p={3}

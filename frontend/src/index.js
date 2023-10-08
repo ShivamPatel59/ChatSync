@@ -11,9 +11,6 @@ ReactDOM.render(
   <ChakraProvider>
     <BrowserRouter>
       <ChatProvider>
-        {
-          
-        }
         <App />
       </ChatProvider>
     </BrowserRouter>

@@ -134,6 +134,10 @@ const SideDrawer = () => {
             onClick={onOpen}
             textColor={"white"}
             _hover={{
+              //zoom effect
+              transform: "scale(1.1)",
+              transition: "transform .2s",
+
               background: "blackAlpha.500",
             }}
           >
@@ -150,8 +154,8 @@ const SideDrawer = () => {
           // fontWeight="extrabold"
           _hover={{
             //Zoom transition
-            transform: "scale(1.1)",
-            transition: "transform .2s",  
+            transform: "scale(1.3)",
+            transition: "transform .5s",  
             
           }}
         >
@@ -204,6 +208,13 @@ const SideDrawer = () => {
                 mr={2}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={
+                  (e) => {
+                    if (e.key === "Enter") {
+                      handleSearch();
+                    }
+                  }
+                }
               />
               <Button
                 onClick={handleSearch}
@@ -225,7 +236,7 @@ const SideDrawer = () => {
                 />
               ))
             )}
-            {loadingChat && <Spinner ml="auto" display="flex" />}
+            {loadingChat && <Spinner ml="auto" display="flex" justifyContent={"center"} />}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

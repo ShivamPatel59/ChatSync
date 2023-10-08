@@ -96,6 +96,11 @@ const Login = () => {
             placeholder="Enter Password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submitHandler();
+              }
+            }}
           />
           <InputRightElement p={4}>
             <Button
